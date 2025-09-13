@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="WhatsApp_Image_2025-09-13_at_3.46.58_AM-removebg-preview.png" alt="" style="width: 200px; height:80px;">
+  </div>
+  <div class="cart-login">
+    
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Welcome to MyStore!</h1>
+    <p>Discover amazing products at the best prices</p>
+    <button id="shop-now">Shop Now</button>
+  </section>
+
+  <section class="products">
+    <!-- منتجات -->
+ <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    <div class="product-card" data-id="1">
+      <img src="WhatsApp Image 2025-09-13 at 3.46.58 AM.jpeg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>$29.99</p>
+      <button class="buy-btn">Buy</button>
+    </div>
+
+    
+    <!-- كرر نفس البلوك لباقي المنتجات -->
+  </section>
+</main>
+
+<footer>
+  <a href="#"><span><i class="fas fa-home"></i></span>Home</a>
+  <a href="#"><span><i class="fas fa-box"></i></span>Products</a>
+  <a href="#"><span><i class="fas fa-bolt"></i></span>Deals</a>
+  <a href="#"><span><i class="fas fa-user"></i></span>Account</a>
+  <a href="#"><span><i class="fas fa-envelope"></i></span>Contact</a>
+</footer>
+
+<!-- نافذة منبثقة -->
+<div id="popup">
+  <div class="popup-content">
+    <h3>الرجاء إدخال القيمة</h3>
+    <input type="text" id="user-value" placeholder="اكتب القيمة هنا">
+    <button id="confirm-btn">تأكيد</button>
+  </div>
+</div>
+
+
+<!-- نافذة تأكيد الشراء المخصصة -->
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <p id="confirmText"></p>
+    <div class="modal-buttons">
+      <button id="yesBtn">تأكيد</button>
+      <button id="noBtn">إلغاء</button>
+    </div>
+  </div>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

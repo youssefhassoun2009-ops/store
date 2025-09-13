@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول - CodeBlaze</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      direction: rtl;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, #1a0033, #000814);
+    }
+
+    .login-box {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(20, 20, 50, 0.85);
+      padding: 50px 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      color: white;
+      box-shadow: 0 0 25px rgba(138,43,226,0.8);
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 25px;
+      color: #bb86fc;
+      font-size: 38px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      width: 100%;
+    }
+
+    .input-group {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 22px 18px;
+      border: 3px solid #555;
+      border-radius: 14px;
+      font-size: 22px;
+      outline: none;
+      transition: 0.3s;
+      color: #fff;
+      background: rgba(0,0,0,0.4);
+      box-sizing: border-box;
+    }
+
+    .input-group input:focus {
+      border-color: #bb86fc;
+      box-shadow: 0 0 10px #bb86fc;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      color: #aaa;
+      pointer-events: none;
+      transition: 0.3s;
+      font-size: 18px;
+      background: rgba(20,20,50,0.85);
+      padding: 0 5px;
+      border-radius: 5px;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:valid + label {
+      top: -14px;
+      font-size: 16px;
+      color: #bb86fc;
+    }
+
+    /* رسالة الخطأ */
+    .error-message {
+      color: #ff4d4d;
+      font-size: 15px;
+      margin-top: 6px;
+      text-align: right;
+      display: none;
+    }
+
+    .login-btn, .google-btn {
+      width: 100%;
+      padding: 20px;
+      border: none;
+      border-radius: 14px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-sizing: border-box;
+    }
+
+    .login-btn {
+      background: linear-gradient(90deg, #6a00f4, #8e2de2);
+      color: white;
+    }
+
+    .login-btn:hover {
+      opacity: 0.85;
+    }
+
+    .google-btn {
+      background: white;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-weight: bold;
+    }
+
+    .google-btn img {
+      width: 26px;
+      height: 26px;
+    }
+
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #6a00f4;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .success-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      color: #0f0;
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      display: none;
+    }
+
+    .signup-link {
+      font-size: 16px;
+    }
+
+    .signup-link a {
+      color: #bb86fc;
+      text-decoration: none;
+    }
+
+    /* حتى بالموبايل يكون كبير */
+    @media (max-width: 480px) {
+      .login-box {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 50px 25px;
+      }
+      .login-box h2 {
+        font-size: 34px;
+      }
+      .input-group input {
+        font-size: 20px;
+        padding: 20px 16px;
+      }
+      .input-group label {
+        font-size: 16px;
+      }
+      .login-btn, .google-btn {
+        font-size: 20px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <div class="login-box">
+    <h2>تسجيل الدخول</h2>
+
+    <form id="loginForm" novalidate>
+      <div class="input-group">
+        <input type="text" id="username" required minlength="6">
+        <label for="username">اسم المستخدم</label>
+        <div class="error-message" id="usernameError">يرجى إدخال 6 أحرف على الأقل</div>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" required minlength="6">
+        <label for="password">كلمة المرور</label>
+        <div class="error-message" id="passwordError">يرجى إدخال 6 أحرف على الأقل</div>
+      </div>
+
+      <div class="signup-link">
+        ليس لديك حساب؟ <a href="#">Sign up</a>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+      <button type="button" class="google-btn" onclick="googleLogin()">
+        <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google"> متابعة مع غوغل
+      </button>
+    </form>
+
+    <div class="loader" id="loader"></div>
+  </div>
+
+  <div class="success-screen" id="successScreen">✅ تم تسجيل الدخول بنجاح</div>
+
+  <script>
+    // خلفية Canvas
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for (let i=0; i<150; i++){
+      stars.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        radius: Math.random()*2,
+        dx: (Math.random()-0.5)*0.5,
+        dy: (Math.random()-0.5)*0.5
+      });
+    }
+
+    function drawStars(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+      gradient.addColorStop(0,"#0a0033");
+      gradient.addColorStop(1,"#1a0033");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      ctx.fillStyle = "#bb86fc";
+      stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+        ctx.fill();
+        s.x+=s.dx; s.y+=s.dy;
+        if(s.x<0 || s.x>canvas.width) s.dx*=-1;
+        if(s.y<0 || s.y>canvas.height) s.dy*=-1;
+      });
+
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+
+    // التحقق من الحقول
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const usernameError = document.getElementById("usernameError");
+    const passwordError = document.getElementById("passwordError");
+
+    function validateField(field, errorDiv) {
+      if (field.value.length < 6) {
+        errorDiv.style.display = "block";
+        field.style.borderColor = "red";
+        return false;
+      } else {
+        errorDiv.style.display = "none";
+        field.style.borderColor = "limegreen";
+        return true;
+      }
+    }
+
+    username.addEventListener("input", () => validateField(username, usernameError));
+    password.addEventListener("input", () => validateField(password, passwordError));
+
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let validUser = validateField(username, usernameError);
+      let validPass = validateField(password, passwordError);
+
+      if (validUser && validPass) {
+        document.getElementById("loader").style.display="block";
+        setTimeout(()=>{
+          document.getElementById("loader").style.display="none";
+          document.getElementById("successScreen").style.display="flex";
+          setTimeout(()=>{ window.location.href="Home.html"; },2000);
+        },2000);
+      }
+    });
+
+    function googleLogin(){
+      alert("سيتم فتح حسابات غوغل (محاكاة)");
+    }
+
+    window.addEventListener("resize", ()=>{
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
